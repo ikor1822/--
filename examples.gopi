@@ -1,12 +1,14 @@
-// Было: let safe = 42
-// Стало:
-safe = 42
-print(safe)
+func fact(n) {
+    if n == 0 { 
+        1 
+    } else { 
+        n * fact(n - 1) 
+    }
+}
 
-// Было: let arr = [1, 2, 3]
-// Стало:
-arr = [1, 2, 3]
-print(arr)
+print("Факториал числа 6:")
+print(fact(6)) 
+
 
 func qs(arr) {
     if len(arr) == 0 {
@@ -14,6 +16,7 @@ func qs(arr) {
     } else {
         pivot = head(arr)
         rest = tail(arr)
+        
         less = filter(fun(x) { x < pivot }, rest)
         eq = filter(fun(x) { x == pivot }, rest)
         greater = filter(fun(x) { x > pivot }, rest)
@@ -21,3 +24,32 @@ func qs(arr) {
         qs(less) + [pivot] + eq + qs(greater)
     }
 }
+
+numbers = [8, 3, 10, 1, 9, 3, 2, 7]
+print("Исходный массив:")
+print(numbers)
+
+print("Отсортированный массив:")
+print(qs(numbers))
+
+
+
+arr = [1, 2, 3, 4, 5]
+
+squares = map(fun(x) { x * x }, arr)
+print("Квадраты чисел [1..5]:")
+print(squares)
+sum = fold(fun(acc, x) { acc + x }, 0, arr)
+print("Сумма чисел [1..5]:")
+print(sum)
+
+
+zero = 1 / 0 
+func multiply(x, y, z) { 
+    x * y * z 
+}
+multBy2 = multiply(2)
+multBy2And3 = multBy2(3)
+
+print("Результат:")
+print(multBy2And3(4)) 
