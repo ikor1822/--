@@ -57,10 +57,30 @@ let tok (s:string) =
     f 0 []
 
 let rec pe t =
+    let a,b = p_add t
+    let rec g l ts =
+        match ts with
+        | op::r when op="==" || op="<" || op=">" ->
+            let x,y = p_add r
+            g (BinOp(op,l,x)) y
+        | _ -> l, ts
+    g a b
+
+and p_add t =
+    let a,b = p_mul t
+    let rec g l ts =
+        match ts with
+        | op::r when op="+" || op="-" ->
+            let x,y = p_mul r
+            g (BinOp(op,l,x)) y
+        | _ -> l, ts
+    g a b
+
+and p_mul t =
     let a,b = pt t
     let rec g l ts =
         match ts with
-        | op::r when op="+" || op="-" || op="*" || op="/" || op="==" || op="<" || op=">" ->
+        | op::r when op="*" || op="/" ->
             let x,y = pt r
             g (BinOp(op,l,x)) y
         | _ -> l, ts
