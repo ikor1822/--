@@ -1,0 +1,23 @@
+// Было: let safe = 42
+// Стало:
+safe = 42
+print(safe)
+
+// Было: let arr = [1, 2, 3]
+// Стало:
+arr = [1, 2, 3]
+print(arr)
+
+func qs(arr) {
+    if len(arr) == 0 {
+        []
+    } else {
+        pivot = head(arr)
+        rest = tail(arr)
+        less = filter(fun(x) { x < pivot }, rest)
+        eq = filter(fun(x) { x == pivot }, rest)
+        greater = filter(fun(x) { x > pivot }, rest)
+        
+        qs(less) + [pivot] + eq + qs(greater)
+    }
+}
