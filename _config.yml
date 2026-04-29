@@ -1,0 +1,4 @@
+theme: jekyll-theme-cayman
+title: Язык программирования Gopi
+description: Функциональный, полный по Тьюрингу язык с ленивыми вычислениями
+show_downloads: true
