@@ -244,6 +244,8 @@ let env0 =
                 printf "[%s]\n" (String.Join(", ", strList))
             | _ -> printfn "%A" a.[0]
             VNum 0))
+        ("input", VNative(fun a -> 
+            VStr(Console.ReadLine())))
         ("map", VNative(fun a -> match a with | [f; VList lst] -> VList (lst |> List.map (fun x -> applyClosure f [x])) | _ -> failwith "map error"))
         ("fold", VNative(fun a -> match a with | [f; acc; VList lst] -> List.fold (fun st x -> applyClosure f [st; x]) acc lst | _ -> failwith "fold error"))
         ("len", VNative(fun a -> match a.[0] with | VList lst -> VNum(lst.Length) | _ -> failwith "len error"))
@@ -253,6 +255,14 @@ let env0 =
             match a with
             | [f; VList lst] -> VList (lst |> List.filter (fun x -> match applyClosure f [x] with VBool b -> b | _ -> false))
             | _ -> failwith "filter error"))
+        ("readFile", VNative(fun a ->
+            match a.[0] with
+            | VStr path -> VStr(File.ReadAllText path)
+            | _ -> failwith "readFile error"))
+        ("writeFile", VNative(fun a ->
+            match a.[0], a.[1] with
+            | VStr path, VStr content -> File.WriteAllText(path, content); VNum 0
+            | _ -> failwith "writeFile error"))
     ]
 
 let rec repl env =
